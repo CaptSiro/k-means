@@ -3,13 +3,13 @@
 
 
 use KMean\Centroid;
-use function KMean\kmean;
+use function KMean\kmeans;
 use function KMean\point_distance;
 use function sptf\functions\expect;
 use function sptf\functions\fail;
 use function sptf\functions\test;
 
-require_once __DIR__ . "/../src/kmean.php";
+require_once __DIR__ . "/../src/kmeans.php";
 
 
 
@@ -26,7 +26,7 @@ test("Should group points.json and return equivalent to result.json", function (
     ];
 
     try {
-        $groups = kmean($points, $centroids, 2);
+        $groups = kmeans($points, $centroids, 2);
     } catch (Exception) {
         fail("Provided valid inputs, should not have failed");
         return;

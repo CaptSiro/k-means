@@ -15,7 +15,7 @@ require_once __DIR__ . "/point-distance.php";
  * @return Centroid[]
  * @throws Exception
  */
-function kmean(array $points, array $centroids, int $point_dimensions, float $threshold = 0.01): array {
+function kmeans(array $points, array $centroids, int $point_dimensions, float $threshold = 0.01): array {
     $centroid_count = count($centroids);
 
     do {

@@ -1,5 +1,7 @@
 {
     "name": "kmean",
     "version": "1.0.0",
-    "dependencies": []
+    "dependencies": [
+        "https:\/\/github.com\/CaptSiro\/sptf.git"
+    ]
 }

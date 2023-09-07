@@ -21,7 +21,7 @@ function closest_point(array $point, array $points, int $size): int {
     }
 
     for ($i = 0; $i < $count; $i++) {
-        $dist = point_distance($point, $points[$i], $size);
+        $dist = point_distance($points[$i], $point, $size);
 
         if ($dist < $smallest) {
             $smallest = $dist;

@@ -36,6 +36,8 @@ readonly class Color implements \KMean\Point {
 After implementing `\KMean\Point` interface the `kmeans` function can be called.
 The function will return an array of `Centroid` objects.
 
+### IMPORTANT: `kmeans` function can return fewer centroids then was given. Example of monochrome image and trying to get more two colors from it
+
 ```php
 $points = [
     new Color(35, 1, 16),

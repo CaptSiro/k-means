@@ -68,3 +68,43 @@ test("Correctly calculate distance from A to B", function () {
     expect(round(point_distance($a, $b, 3)))
         ->toBe(round(50.8822169328));
 });
+
+
+
+test("Should return less centroids then provided, because the data set was not rich enough", function () {
+    $points = [
+        new TestPoint2D(0, 50),
+        new TestPoint2D(0, 50),
+        new TestPoint2D(0, 50),
+        new TestPoint2D(0, 50),
+        new TestPoint2D(0, 50),
+        new TestPoint2D(0, 50),
+        new TestPoint2D(50, 0),
+        new TestPoint2D(50, 0),
+        new TestPoint2D(50, 0),
+        new TestPoint2D(50, 0),
+        new TestPoint2D(50, 0),
+        new TestPoint2D(50, 0),
+        new TestPoint2D(50, 0),
+        new TestPoint2D(50, 0),
+        new TestPoint2D(50, 50),
+        new TestPoint2D(50, 50),
+        new TestPoint2D(50, 50),
+    ];
+
+    $centroids = [
+        new TestPoint2D(0, 0),
+        new TestPoint2D(0, 50),
+        new TestPoint2D(50, 0),
+        new TestPoint2D(50, 50),
+    ];
+
+    try {
+        $groups = kmeans($points, $centroids, 2);
+    } catch (Exception) {
+        fail("Provided valid inputs, should not have failed");
+        return;
+    }
+
+    expect(count($groups) < count($centroids))->toBe(true);
+});

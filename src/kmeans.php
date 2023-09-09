@@ -9,6 +9,7 @@ use Exception;
 require_once __DIR__ . "/move-centroids.php";
 require_once __DIR__ . "/point-distance.php";
 require_once __DIR__ . "/Point.php";
+require_once __DIR__ . "/sanitize-centroids.php";
 
 
 
@@ -21,14 +22,19 @@ require_once __DIR__ . "/Point.php";
  * @throws Exception
  */
 function kmeans(array $points, array $centroids, int $point_dimensions, float $threshold = 0.01): array {
+    $centroid_count = count($centroids);
+    $result = sanitize_centroids($points, $centroid_count);
+
+    if ($result !== false) {
+        return $result;
+    }
+
     /** @var Centroid[] $centroid_objects */
     $centroid_objects = [];
 
-    $centroid_count = count($centroids);
     for ($j = 0; $j < $centroid_count; $j++) {
         $centroid_objects[] = new Centroid($centroids[$j]->data(), []);
     }
-
 
     do {
         $dist = 0;

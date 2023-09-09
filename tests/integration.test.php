@@ -5,6 +5,7 @@
 use KMean\Centroid;
 use TestUtils\TestPoint2D;
 use function KMean\kmeans;
+use function KMean\kmeans_sort;
 use function KMean\point_distance;
 use function sptf\functions\expect;
 use function sptf\functions\fail;
@@ -34,17 +35,7 @@ test("Should group points.json and return equivalent to result.json", function (
         return;
     }
 
-    usort($groups, function (Centroid $a, Centroid $b) { // ASC sort
-        if (count($a->connections) === count($b->connections)) {
-            return 0;
-        }
-
-        if (count($a->connections) < count($b->connections)) {
-            return -1;
-        }
-
-        return 1;
-    });
+    kmeans_sort($groups);
 
     $produced = [];
     foreach ($groups as $centroid) {

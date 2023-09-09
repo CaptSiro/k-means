@@ -10,6 +10,7 @@ require_once __DIR__ . "/move-centroids.php";
 require_once __DIR__ . "/point-distance.php";
 require_once __DIR__ . "/Point.php";
 require_once __DIR__ . "/sanitize-centroids.php";
+require_once __DIR__ . "/kmeans-sort.php";
 
 
 

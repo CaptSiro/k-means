@@ -6,22 +6,24 @@ use Exception;
 
 
 
-require_once __DIR__ . "/closest-point.php";
+require_once __DIR__ . "/closest-centroid.php";
 require_once __DIR__ . "/Centroid.php";
 
 
 
 /**
+ * @param Point[] $points
+ * @param Centroid[] $centroids
+ * @param int $size
  * @return Centroid[]
  * @throws Exception
  */
 function move_centroids(array $points, array $centroids, int $size): array {
     $map = [];
-
     $point_count = count($points);
 
     for ($i = 0; $i < $point_count; $i++) {
-        $closest = closest_point($points[$i], $centroids, $size);
+        $closest = closest_centroid($points[$i], $centroids, $size);
 
         if (!isset($map[$closest])) {
             $map[$closest] = [$points[$i]];

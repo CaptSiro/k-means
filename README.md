@@ -10,38 +10,53 @@ absol pickup https://github.com/CaptSiro/sptf.git
 
 ## Usage
 
-You need to convert your data in arrays. These arrays can have any length, but all points and centroids must be the
-same length. The length of the array will be passed as a `point_dimensions` argument. Example of converting `Color` to data array:
+For your data classes you need to implement `\KMean\Point`.
+The array returned from `data()` must have fixed size.
+That means you cannot return from one object array of length two and from other one array of length three.
+Example of `Color` data class:
 
 ```php
-readonly class Color {
+readonly class Color implements \KMean\Point {
+    private array $internal;
+    
     public function __construct(
         public int $r,
         public int $g,
         public int $b,
-    ) {}
+    ) {
+        $this->internal = [$r, $g, $b]; // always length of 3
+    }
+    
+    public function data() : array{
+        return $this->internal;
+    }
 }
-
-$color = new Color(255, 255, 255);
-$data_array = [$color->r, $color->g, $color->b];
 ```
 
-After conversion the `kmeans` function can be called. The function will return an array of `Centroid` objects.
+After implementing `\KMean\Point` interface the `kmeans` function can be called.
+The function will return an array of `Centroid` objects.
 
 ```php
 $points = [
-    [10, 44],
-    [69, 70],
-    [420, 103],
-    [727, 53]
+    new Color(35, 1, 16),
+    new Color(13, 12, 15),
+    new Color(196, 196, 196),
+    new Color(6, 28, 168),
+    new Color(25, 43, 43),
+    new Color(114, 168, 120),
+    new Color(166, 170, 128),
+    new Color(112, 178, 117)
 ];
 
 $centroids = [
-    [0, 0],
-    [0, 0]
+    new Color(0, 0, 0),
+    new Color(0, 0, 0),
 ];
 
-$point_dimensions = 2; // using two numbers to express points position
+$point_dimensions = 3; // using three channels to describe color
 
-$computed = \KMean\kmeans($points, $centroids, $point_dimensions);
+$computed = \KMean\kmeans($points, $centroids, $point_dimensions); // returns array of Centroid objects
+
+// Centroid->point muted array from provided point->data()
+// Centroid->connections array of points to which centroid connects to
 ```

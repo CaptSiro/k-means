@@ -5,13 +5,22 @@ namespace KMean;
 
 
 readonly class Centroid {
+    /**
+     * @param array $point
+     * @param Point[] $connections
+     */
     public function __construct(
         public array $point,
-        public int $connections
+        public array $connections
     ) {}
 
 
 
+    /**
+     * @param Point[] $points
+     * @param int $size
+     * @return self
+     */
     static function create(array $points, int $size): self {
         $centroid = [];
 
@@ -21,7 +30,7 @@ readonly class Centroid {
 
         $count = count($points);
         for ($i = 0; $i < $count; $i++) {
-            $p = $points[$i];
+            $p = $points[$i]->data();
 
             for ($j = 0; $j < $size; $j++) {
                 $centroid[$j] += $p[$j];
@@ -32,16 +41,20 @@ readonly class Centroid {
             $centroid[$i] = $centroid[$i] / $count;
         }
 
-        return new self($centroid, $count);
+        return new self($centroid, $points);
     }
 
 
 
-    static function copy(Centroid|array $centroid): Centroid {
+    static function copy(Point|Centroid|array $centroid): Centroid {
         if ($centroid instanceof Centroid) {
             return $centroid;
         }
 
-        return new self($centroid, 0);
+        if ($centroid instanceof Point) {
+            return new self($centroid->data(), []);
+        }
+
+        return new self($centroid, []);
     }
 }

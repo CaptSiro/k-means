@@ -3,6 +3,7 @@
 
 
 use KMean\Centroid;
+use TestUtils\TestPoint2D;
 use function KMean\kmeans;
 use function KMean\point_distance;
 use function sptf\functions\expect;
@@ -10,6 +11,7 @@ use function sptf\functions\fail;
 use function sptf\functions\test;
 
 require_once __DIR__ . "/../src/kmeans.php";
+require_once __DIR__ . "/../test-utils/TestPoint2D.php";
 
 
 
@@ -17,12 +19,12 @@ test("Should group points.json and return equivalent to result.json", function (
     $points = json_decode(file_get_contents(__DIR__ . "/points.json"));
 
     foreach ($points as $i => $point) {
-        $points[$i] = [$point->x, $point->y];
+        $points[$i] = new TestPoint2D($point->x, $point->y);
     }
 
     $centroids = [
-        [0, 0],
-        [0, 0]
+        new TestPoint2D(0, 0),
+        new TestPoint2D(0, 0),
     ];
 
     try {
@@ -33,11 +35,11 @@ test("Should group points.json and return equivalent to result.json", function (
     }
 
     usort($groups, function (Centroid $a, Centroid $b) { // ASC sort
-        if ($a->connections === $b->connections) {
+        if (count($a->connections) === count($b->connections)) {
             return 0;
         }
 
-        if ($a->connections < $b->connections) {
+        if (count($a->connections) < count($b->connections)) {
             return -1;
         }
 

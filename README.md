@@ -5,7 +5,7 @@
 ## Installation
 
 ```shell
-absol pickup https://github.com/CaptSiro/sptf.git
+absol pickup https://github.com/CaptSiro/k-means.git
 ```
 
 ## Usage
